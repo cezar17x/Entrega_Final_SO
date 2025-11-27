@@ -1,0 +1,19 @@
+name: Release Build
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+      - run: pip install pyinstaller
+      - run: python -m PyInstaller --onefile src/calculadora.py
+      - uses: actions/upload-artifact@v3
+        with:
+          name: calculadora-exe
+          path: dist/calculadora.exe
